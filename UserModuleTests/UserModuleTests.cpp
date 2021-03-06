@@ -5,6 +5,7 @@
 
 
 #include "Encryption.h"
+#include "Password.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -189,6 +190,153 @@ namespace UserModuleTests
 			Assert::AreEqual(expected.at(0), actual.at(0));
 
 		}
+
+
+	};
+
+
+	TEST_CLASS(PasswordTests)
+	{
+		
+	public:
+
+		TEST_METHOD(T010_PasswordLock_secret________openBracketYWApostropheYCloseBracket)
+		{
+			//arrange, act, assert
+			string inputPassword = "secret";
+			string expected = "(yw'y)";
+			vector<string> actual;
+			vector<string> inputMessage = { "hello", "there" };
+			//password shift is automatically 20
+
+			actual = PasswordLock(inputPassword, inputMessage);
+
+			//password should be the second item in the returned list
+			//since the first is the hash line
+			Assert::AreEqual(expected, actual.at(1));
+
+		}
+
+
+		TEST_METHOD(T011_PasswordLock_password1234OtherChars________bunchOfChars)
+		{
+																		
+			//arrange, act, assert
+			string inputPassword = "password1234!?*&";
+			string expected = "%u((,$'xEFGH5S>:";
+			vector<string> actual;
+			vector<string> inputMessage = { "hello", "there" };
+			//password shift is automatically 20
+
+			actual = PasswordLock(inputPassword, inputMessage);
+
+			//password should be the second item in the returned list
+			//since the first is the hash line
+			Assert::AreEqual(expected, actual.at(1));
+
+		}
+
+
+
+		TEST_METHOD(T012_PasswordUnlock_bunchOfChars________password1234OtherChars)
+		{
+			//example passwordLocked message:
+			//##########
+			//%u((,$'xEFGH5S>:
+			//gdkkn~sgdqd~rhqd
+			//axd~l`&`l
+				//`kk~`qntmc~sgd~vnqkc
+				//161
+
+			//arrange, act, assert
+			
+			string expected = "password1234!?*&";
+			vector<string> actual;
+			vector<string> inputMessage = { "##########", "%u((,$'xEFGH5S>:", "gdkkn~sgdqd~rhqd", "axd~l`&`l", "`kk~`qntmc~sgd~vnqkc", "161" };
+			//password shift is automatically 20
+
+			actual = PasswordUnlock(inputMessage);
+
+			//password is first line of returned vector
+			Assert::AreEqual(expected, actual.at(0));
+
+		}
+
+
+
+		TEST_METHOD(T013_PasswordUnlock_openBracketYWApostropheYCloseBracket________secret)
+		{
+		
+			//example passwordLocked message:
+			//##########
+			//(yw'y)
+			//gdkkn~sgdqd~rhqd
+			//axd~l`&`l
+				//`kk~`qntmc~sgd~vnqkc
+				//161
+
+			//arrange, act, assert
+
+			string expected = "secret";
+			vector<string> actual;
+			vector<string> inputMessage = { "##########", "(yw'y)", "gdkkn~sgdqd~rhqd", "axd~l`&`l", "`kk~`qntmc~sgd~vnqkc", "161" };
+			//password shift is automatically 20
+
+			actual = PasswordUnlock(inputMessage);
+
+			//password is first line of returned vector
+			Assert::AreEqual(expected, actual.at(0));
+
+		}
+
+
+
+		TEST_METHOD(T014_PasswordUnlock_and_PasswordUnlock_I_LOVE_CODING________I_LOVE_CODING)
+		{
+
+		
+
+			//arrange, act, assert
+			string inputPassword = "I LOVE CODING";
+			string expected = inputPassword;
+			vector<string> inputMessage = {"this", "is", "tedious"};
+			vector<string> actual;
+			vector<string> temp;
+		
+			//password shift is automatically 20
+			temp = PasswordLock(inputPassword, inputMessage);
+			actual = PasswordUnlock(temp);
+
+			//password is first line of returned vector
+			Assert::AreEqual(expected, actual.at(0));
+
+		}
+
+
+
+		TEST_METHOD(T015_PasswordUnlock_and_PasswordUnlock_variouseSymbals________variouseSymbals)
+		{
+
+
+
+			//arrange, act, assert
+			string inputPassword = "!@#$%^&*()~{}[];:'.>,</|";
+			string expected = inputPassword;
+			vector<string> inputMessage = { "this", "is", "tedious" };
+			vector<string> actual;
+			vector<string> temp;
+
+			//password shift is automatically 20
+			temp = PasswordLock(inputPassword, inputMessage);
+			actual = PasswordUnlock(temp);
+
+			//password is first line of returned vector
+			Assert::AreEqual(expected, actual.at(0));
+
+		}
+
+
+		
 
 
 	};
