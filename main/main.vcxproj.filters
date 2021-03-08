@@ -24,6 +24,9 @@
     <ClCompile Include="Password.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="CreateAccount.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Encryption.h">
@@ -32,5 +35,12 @@
     <ClInclude Include="Password.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CreateAccount.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestDatabase.txt" />
+    <Text Include="AccountDatabase.txt" />
   </ItemGroup>
 </Project>

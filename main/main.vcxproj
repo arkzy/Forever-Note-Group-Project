@@ -139,13 +139,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CreateAccount.cpp" />
     <ClCompile Include="Encryption.cpp" />
     <ClCompile Include="Password.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CreateAccount.h" />
     <ClInclude Include="Encryption.h" />
     <ClInclude Include="Password.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="AccountDatabase.txt" />
+    <Text Include="TestDatabase.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
