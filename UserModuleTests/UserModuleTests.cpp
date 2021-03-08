@@ -6,6 +6,7 @@
 
 #include "Encryption.h"
 #include "Password.h"
+#include "CreateAccount.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -340,4 +341,112 @@ namespace UserModuleTests
 
 
 	};
+
+
+
+	TEST_CLASS(CreateAccountTests)
+	{
+		//there needs to be a seperate file for testing so that running the tests won't 
+		//delete data that the program actually needs/is using for manual tests
+	public:
+		//{"testaccount", "1234", "othertest", "password"};
+		TEST_METHOD(T016_TestCreateAccount_testaccount_x________false)
+		{
+			//it should recognize this account as a duplicate
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "testaccount";
+			string inputPassword = "x";	//password doesn't matter in duplicate search, only username
+			bool expected = false;
+			
+			bool actual = TestCreateAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file and delete the created directory
+			TestingDirectoryWasCreated(inputUserName);
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+		TEST_METHOD(T017_TestCreateAccount_othertest_x________false)
+		{
+			//it should recognize this account as a duplicate
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "othertest";
+			string inputPassword = "x";	//password doesn't matter in duplicate search, only username
+			bool expected = false;
+
+			bool actual = TestCreateAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file and delete the created directory
+			TestingDirectoryWasCreated(inputUserName);
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+		TEST_METHOD(T018_TestCreateAccount_original_x________true)
+		{
+			//it should recognize this account as a duplicate
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "original";
+			string inputPassword = "x";	//password doesn't matter in duplicate search, only username
+			bool expected = true;
+
+			bool actual = TestCreateAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file and delete the created directory
+			TestingDirectoryWasCreated(inputUserName);
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+		TEST_METHOD(T019_TestCreateAccount_newaccount_x________true)
+		{
+			//it should recognize this account as a duplicate
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "newaccount";
+			string inputPassword = "x";	//password doesn't matter in duplicate search, only username
+			bool expected = true;
+
+			bool actual = TestCreateAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file and delete the created directory
+			TestingDirectoryWasCreated(inputUserName);
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+		
+
+
+
+
+
+	};
+
+
 }
