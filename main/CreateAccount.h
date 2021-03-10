@@ -19,3 +19,5 @@ bool TestCreateAccount(string, string);
 bool TestingDirectoryWasCreated(string);
 
 bool CreateAccount(string, string);
+
+bool FileIsEmpty(string);

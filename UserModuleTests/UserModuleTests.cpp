@@ -7,6 +7,7 @@
 #include "Encryption.h"
 #include "Password.h"
 #include "CreateAccount.h"
+#include "LogIntoAccount.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace std;
@@ -441,6 +442,159 @@ namespace UserModuleTests
 
 
 		
+
+
+
+
+
+	};
+
+
+
+	TEST_CLASS(LogIntoAccountTests)
+	{
+		//there needs to be a seperate file for testing so that running the tests won't 
+		//delete data that the program actually needs/is using for manual tests
+	public:
+		//{"testaccount", "1234", "othertest", "password"};
+		TEST_METHOD(T020_TestLogIntoAccount_testaccount_1233________false)
+		{
+			//it should recognize that the password is wrong
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "testaccount";
+			string inputPassword = "1233";	
+			bool expected = false;
+
+			bool actual = TestingLogIntoAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+		TEST_METHOD(T021_TestLogIntoAccount_testacccount_1234________false)
+		{
+			//it should recognize that the username is wrong
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "testacccount";
+			string inputPassword = "1234";	
+			bool expected = false;
+
+			bool actual = TestingLogIntoAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+
+		TEST_METHOD(T022_TestLogIntoAccount_testaccount_1234________true)
+		{
+			//it should recognize that it matches an account
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "testaccount";
+			string inputPassword = "1234";
+			bool expected = true;
+
+			bool actual = TestingLogIntoAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+		TEST_METHOD(T023_TestLogIntoAccount_othertest_passworD________false)
+		{
+			//it should recognize that the password is wrong
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "othertest";
+			string inputPassword = "passworD";
+			bool expected = false;
+
+			bool actual = TestingLogIntoAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+
+		TEST_METHOD(T024_TestLogIntoAccount_otherTest_password________false)
+		{
+			//it should recognize that the username is wrong
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "otherTest";
+			string inputPassword = "password";
+			bool expected = false;
+
+			bool actual = TestingLogIntoAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+		TEST_METHOD(T025_TestLogIntoAccount_othertest_password________true)
+		{
+			//it should recognize that the username is wrong
+			//arrange, act, assert
+			ClearFileForTesting();
+			PutInfoOnTestingFile();	//puts {"testaccount", "1234", "othertest", "password"} on the file;
+
+			string inputUserName = "othertest";
+			string inputPassword = "password";
+			bool expected = true;
+
+			bool actual = TestingLogIntoAccount(inputUserName, inputPassword);
+
+			//cleanup after the test, clean the file
+			ClearFileForTesting();
+
+			Assert::AreEqual(expected, actual);
+
+		}
+
+
+
+		
+
+
+
 
 
 

@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;$(SolutionDir)main\Debug\LogIntoAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,7 +117,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;$(SolutionDir)main\Debug\LogIntoAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -137,7 +137,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;$(SolutionDir)main\Debug\LogIntoAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -157,7 +157,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(VCInstallDir)UnitTest\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)main\Debug\Encryption.obj;$(SolutionDir)main\Debug\Password.obj;$(SolutionDir)main\Debug\CreateAccount.obj;$(SolutionDir)main\Debug\LogIntoAccount.obj;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
