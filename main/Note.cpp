@@ -3,6 +3,7 @@
 #include <ctime>
 #include <sstream>
 #include <iomanip>
+#include <vector>
 #include "Note.h"
 
 //Constructors
@@ -163,8 +164,36 @@ void Note::WritetoFile(string directoryPath)
 	fileStream.open(this->path, ios::out);
 	if (fileStream.is_open())
 	{
-		fileStream << this->title << endl;
-		fileStream << this->contents << endl;
+		if (this->isEncrypted)
+		{
+			//call encryption
+			vector<string> noteStrings;
+			noteStrings.push_back(this->title);
+			noteStrings.push_back(this->contents);
+			if (this->isPasswordProtected)
+			{
+				noteStrings.push_back(this->password);
+			}
+
+			vector<string> encryptedStrings = noteStrings;
+			encryptedStrings.push_back("!@#"); //remove this
+			//vector<string> encryptedStrings = Encrypt(noteStrings);
+			string encrytionKey = encryptedStrings.back();
+			fileStream << "#" << encrytionKey << endl;
+			for (vector<string>::iterator i = encryptedStrings.begin(); i != encryptedStrings.end() - 1; i++)
+			{
+				fileStream << openingBrackets << *i << closingBrackets << endl;
+			}
+		}
+		else
+		{
+			fileStream << openingBrackets << this->title << closingBrackets << endl;
+			fileStream << openingBrackets << this->contents << closingBrackets << endl;
+			if (this->isPasswordProtected)
+			{
+				fileStream << openingBrackets << this->password << closingBrackets << endl;
+			}
+		}
 
 		fileStream.close();
 	}
