@@ -103,6 +103,8 @@ Note Note::Open(string filePath)
 	string encryptionKey;
 	string password;
 
+	vector<string> readStrings;
+
 	fstream fileStream;
 	fileStream.open(filePath, ios::in);
 	if (fileStream.is_open())
@@ -124,6 +126,7 @@ Note Note::Open(string filePath)
 
 		//get title, required
 		Note::ReadNoteField(temp, title, fileStream);
+		readStrings.push_back(title);
 
 		//get content, required
 		if (!getline(fileStream, temp))
@@ -131,18 +134,39 @@ Note Note::Open(string filePath)
 			return Note("", ""); //no contents
 		}
 		Note::ReadNoteField(temp, contents, fileStream);
+		readStrings.push_back(contents);
 
 		//get password
 		if (getline(fileStream, temp))
 		{
 			Note::ReadNoteField(temp, password, fileStream);
+			readStrings.push_back(password);
 		}
 
 		fileStream.close();
 	}
-	//call decryption
 
-	Note newNote = Note(title, contents, encryptionKey != "", password);
+	Note newNote = Note("", ""); //define a Note variable
+	//call decryption
+	if (encryptionKey != "")
+	{
+		readStrings.push_back(encryptionKey);
+		vector<string> decryptedStrings = readStrings;
+		//vector<string> decryptedStrings = Decrypt(readStrings);
+		if (decryptedStrings.size() > 2)
+		{
+			newNote = Note(decryptedStrings[0], decryptedStrings[1], true, decryptedStrings[2]);
+		}
+		else
+		{
+			newNote = Note(decryptedStrings[0], decryptedStrings[1], true, "");
+		}
+	}
+	else
+	{
+		newNote = Note(title, contents);
+	}
+
 	newNote.SetPath(filePath);
 	return newNote;
 }

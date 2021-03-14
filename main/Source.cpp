@@ -25,7 +25,8 @@ int main() {
 	note.GetContents(someString);
 	std::cout << someString << std::endl;
 	strings.push_back(someString);
-	
+
+	cout << "vector: ";
 	for (std::vector<string>::iterator i = strings.begin(); i != strings.end(); i++)
 	{
 		cout << *i << " ";
