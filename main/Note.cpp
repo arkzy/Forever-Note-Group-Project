@@ -17,10 +17,39 @@ Note::Note(string title, string contents, bool isEncrypted, string password)
 	this->SetPassword(password);
 }
 
+//private constants
+const string Note::openingBrackets = "{{";
+const string Note::closingBrackets = "}}";
+const char Note::encryptionChar = '#';
+
 //private functions
 void Note::SetPath(string path)
 {
 	this->path = path;
+}
+
+void Note::ReadNoteField(string temp, string& field, fstream& fileStream)
+{
+	if (temp.substr(0, 2) == openingBrackets)
+	{
+		if (temp.substr(temp.length() - 2) == closingBrackets)
+		{
+			field = temp.substr(2, temp.length() - 4);
+		}
+		else
+		{
+			field = temp.substr(2);
+			while (getline(fileStream, temp))
+			{
+				if (temp.substr(temp.length() - 2) == closingBrackets)
+				{
+					field += temp.substr(0, temp.length() - 2);
+					break;
+				}
+				field += temp;
+			}
+		}
+	}
 }
 
 //public functions
@@ -54,6 +83,7 @@ void Note::SetPassword(string password)
 	this->password = password;
 	if (password != "")
 	{
+		this->SetIsEncrypted(true);
 		this->isPasswordProtected = true;
 		this->passwordState = PasswordState::Unlocked;
 	}
@@ -66,19 +96,52 @@ void Note::SetPassword(string password)
 
 Note Note::Open(string filePath)
 {
+	string temp;
 	string title;
 	string contents;
+	string encryptionKey;
+	string password;
 
 	fstream fileStream;
 	fileStream.open(filePath, ios::in);
 	if (fileStream.is_open())
 	{
-		getline(fileStream, title);
-		getline(fileStream, contents);
+		if (!getline(fileStream, temp))
+		{
+			return Note("", ""); //empty
+		}
+
+		//get encryption key, if exists
+		if (temp[0] == encryptionChar) //encrypted
+		{
+			encryptionKey = temp.substr(1);
+			if (!getline(fileStream, temp))
+			{
+				return Note("", ""); //no title/contents
+			}
+		}
+
+		//get title, required
+		Note::ReadNoteField(temp, title, fileStream);
+
+		//get content, required
+		if (!getline(fileStream, temp))
+		{
+			return Note("", ""); //no contents
+		}
+		Note::ReadNoteField(temp, contents, fileStream);
+
+		//get password
+		if (getline(fileStream, temp))
+		{
+			Note::ReadNoteField(temp, password, fileStream);
+		}
 
 		fileStream.close();
 	}
-	Note newNote = Note(title, contents);
+	//call decryption
+
+	Note newNote = Note(title, contents, encryptionKey != "", password);
 	newNote.SetPath(filePath);
 	return newNote;
 }
@@ -119,4 +182,13 @@ PasswordState Note::CheckPassword(string passwordEntry)
 		this->passwordState = PasswordState::Unlocked;
 	}
 	return this->passwordState;
+}
+
+bool Note::IsEmptyNote()
+{
+	if (this->title == "" || this->contents == "")
+	{
+		return true;
+	}
+	return false;
 }

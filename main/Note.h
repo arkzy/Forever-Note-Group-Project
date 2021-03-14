@@ -16,7 +16,12 @@ private:
 	bool isPasswordProtected;
 	PasswordState passwordState;
 
+	static const string openingBrackets;
+	static const string closingBrackets;
+	static const char encryptionChar;
+
 	void SetPath(string);
+	static void ReadNoteField(string, string&, fstream&);
 
 public:
 	/// <summary>
@@ -78,5 +83,7 @@ public:
 	//void Edit();
 	void Delete();
 	PasswordState CheckPassword(string);
+
+	bool IsEmptyNote();
 };
 
