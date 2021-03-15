@@ -25,6 +25,10 @@ private:
 
 public:
 	/// <summary>
+	/// Default Constructor
+	/// </summary>
+	Note();
+	/// <summary>
 	/// Parameterized Note Constructor
 	/// </summary>
 	/// <param name="title"></param>
@@ -38,9 +42,10 @@ public:
 	/// <param name="isEncrypted"></param>
 	/// <param name="password"></param>
 	Note(string, string, bool, string);
-
-	//Note(Note& rhs);
-	//~Note();
+	/// <summary>
+	/// Destructor
+	/// </summary>
+	~Note();
 
 	/// <summary>
 	/// Get the Note's title, returns the PasswordState.

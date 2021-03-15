@@ -6,7 +6,14 @@
 #include <vector>
 #include "Note.h"
 
+//private constants
+const string Note::openingBrackets = "{{";
+const string Note::closingBrackets = "}}";
+const char Note::encryptionChar = '#';
+
 //Constructors
+Note::Note() : Note("", "", false, "") { }
+
 Note::Note(string title, string contents) : Note(title, contents, false, "") { }
 
 Note::Note(string title, string contents, bool isEncrypted, string password)
@@ -17,11 +24,6 @@ Note::Note(string title, string contents, bool isEncrypted, string password)
 
 	this->SetPassword(password);
 }
-
-//private constants
-const string Note::openingBrackets = "{{";
-const string Note::closingBrackets = "}}";
-const char Note::encryptionChar = '#';
 
 //private functions
 void Note::SetPath(string path)
@@ -111,7 +113,7 @@ Note Note::Open(string filePath)
 	{
 		if (!getline(fileStream, temp))
 		{
-			return Note("", ""); //empty
+			return Note(); //empty
 		}
 
 		//get encryption key, if exists
@@ -120,7 +122,7 @@ Note Note::Open(string filePath)
 			encryptionKey = temp.substr(1);
 			if (!getline(fileStream, temp))
 			{
-				return Note("", ""); //no title/contents
+				return Note(); //no title/contents
 			}
 		}
 
@@ -131,7 +133,7 @@ Note Note::Open(string filePath)
 		//get content, required
 		if (!getline(fileStream, temp))
 		{
-			return Note("", ""); //no contents
+			return Note(); //no contents
 		}
 		Note::ReadNoteField(temp, contents, fileStream);
 		readStrings.push_back(contents);
@@ -146,7 +148,7 @@ Note Note::Open(string filePath)
 		fileStream.close();
 	}
 
-	Note newNote = Note("", ""); //define a Note variable
+	Note newNote = Note(); //define a Note variable
 	//call decryption
 	if (encryptionKey != "")
 	{
@@ -244,4 +246,9 @@ bool Note::IsEmptyNote()
 		return true;
 	}
 	return false;
+}
+
+Note::~Note()
+{
+	//delete any manually allocated memory
 }
